@@ -59,7 +59,6 @@ class KNearestNeighbor(object):
         Inputs:
         - X: A numpy array of shape (num_test, D) containing test data.
         D? dimension
-        5만개의 행이 있는데 3072 (32*32*3)
 
         Returns:
         - dists: A numpy array of shape (num_test, num_train) where dists[i, j]
@@ -134,9 +133,8 @@ class KNearestNeighbor(object):
         #########################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
         # ( a - b ) ^ 2 = a^2 -2ab + b^2
-        dists = np.reshape(np.sum(X**2, axis=1), [3,1]) + np.sum(self.X_train**2, axis=1) \
-            - 2 * np.matmul(X, self.X_train.T)
-        dists = np.sqrt(dists)
+        dists = np.reshape(np.sum(X**2, axis=1), [num_test,1]) + np.sum(self.X_train**2, axis=1)
+        dists = np.sqrt(dists - 2 * np.matmul(X, self.X_train.T))
 
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
         return dists
@@ -169,8 +167,9 @@ class KNearestNeighbor(object):
             #########################################################################
             # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-            pass
-
+            sortIndex = np.argsort(dists[i,:])[:k]
+            closest_y = self.y_train[sortIndex]
+            
             # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
             #########################################################################
             # TODO:                                                                 #
@@ -180,8 +179,9 @@ class KNearestNeighbor(object):
             # label.                                                                #
             #########################################################################
             # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
-
-            pass
+            
+                # k개의 이웃 중에서 빈도수가 가장 많은 것 선택
+            y_pred[i] = np.argmax(np.bincount(closest_y))
 
             # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
