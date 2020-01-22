@@ -4,7 +4,7 @@
 - 스터디원 : 성원, 샛별, 지희, 효진
 - CS231n 완강 및 Assignment 풀기
 
-<link>http://cs231n.github.io/assignments2019/assignment1/</link>
+[CS231 github.io](http://cs231n.github.io/assignments2019/assignment1/)
 
 ## Assignment 1
 - Q1 : k-nn
