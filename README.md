@@ -7,7 +7,7 @@
 > ref : [CS231n github.io Link](http://cs231n.github.io/assignments2019/assignment1/) 
 
 ## Assignment 1
-- Q1 : k-nn
+- :ballot_box_with_check: Q1 : k-nn
 - Q2 : SVM
 - Q3 : Softmax
 - Q4 : two-layer NN
