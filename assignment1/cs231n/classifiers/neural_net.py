@@ -80,7 +80,10 @@ class TwoLayerNet(object):
         #############################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-        pass
+        fc = X.dot(W1)+b1
+        X2 = fc # 첫번째 mat
+        X2[fc<=0] = 0 # ReLu 거침
+        scores = X2.dot(W2) + b2 # 두번째 mat
 
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
@@ -98,7 +101,12 @@ class TwoLayerNet(object):
         #############################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-        pass
+        scores[np.arange(scores.shape[0])] -= np.reshape(np.max(scores,axis=1),[-1,1])
+        exp_scores = np.exp(scores)
+        scores_sum = np.reshape(np.sum(exp_scores, axis=1),[-1,1])
+        prob_scores = exp_scores / scores_sum
+        loss_i = -np.log(prob_scores[np.arange(scores.shape[0]),y])
+        loss = np.sum(loss_i)
 
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
@@ -111,8 +119,21 @@ class TwoLayerNet(object):
         #############################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-        pass
+        prob_scores[np.arange(N),y] -= 1
+        prob_scores /= X.shape[0]
 
+        db2 = np.reshape(np.sum(prob_scores,axis=0),[-1,])
+        dW2 = (X2.T).dot(prob_scores)
+        dX2 = prob_scores.dot(W2.T)
+
+        dfc = dX2 * (fc>0)
+        db1 = np.reshape(np.sum(dfc,axis=0),[-1,])
+        dW1 = (X.T).dot(dfc)
+
+        dW2 = dW2 + reg * 2 * W2
+        dW1 = dW1 + reg * 2 * W1
+
+        grads = {'W1':dW1, 'W2':dW2, 'b1':db1, 'b2':db2}
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
         return loss, grads
@@ -156,7 +177,10 @@ class TwoLayerNet(object):
             #########################################################################
             # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-            pass
+            random_idxs = np.random.choice(num_train, batch_size) # batch size만큼의 index 배열
+            X_batch = X[random_idxs]
+            y_batch = y[random_idxs]
+
 
             # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
@@ -172,7 +196,10 @@ class TwoLayerNet(object):
             #########################################################################
             # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-            pass
+            self.params['W1'] = self.params['W1'] - learning_rate * grads['W1']
+            self.params['b1'] = self.params['b1'] - learning_rate * grads['b1']
+            self.params['W2'] = self.params['W2'] - learning_rate * grads['W2']
+            self.params['b2'] = self.params['b2'] - learning_rate * grads['b2']
 
             # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
@@ -218,7 +245,10 @@ class TwoLayerNet(object):
         ###########################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-        pass
+        fc1 = X.dot(self.params['W1']) + self.params['b1']
+        fc1[fc1<=0] = 0
+        fc2 = fc1.dot(self.params['W2'])+self.params['b2']
+        y_pred = np.argmax(fc2, axis=1)
 
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
