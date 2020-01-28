@@ -107,7 +107,7 @@ def svm_loss_vectorized(W, X, y, reg):
 
     dscores = np.zeros_like(scores)
     dscores[margin > 0] = 1
-    dscores[np.arrage(num_train),y] -= np.sum(dscores, axis=1)
+    dscores[np.arange(num_train),y] -= np.sum(dscores, axis=1)
     dW = (X.T).dot(margin) / num_train
     dW += reg * W # Regularization
 
