@@ -8,7 +8,7 @@
 
 ## Assignment 1
 - :ballot_box_with_check: Q1 : k-Nearest Neighbor classifier
-- Q2 : Training a Support Vector Machine
+- :ballot_box_with_check: Q2 : Training a Support Vector Machine
 - Q3 : Implement a Softmax classifier
 - Q4 : two-layer NN
 - Q5 : higher level representation # Image Features
