@@ -15,7 +15,7 @@
 
 ## Assignment 2
 - Q1 : Fully-connected Neural Network
-  - [참고] (https://kratzert.github.io/2016/02/12/understanding-the-gradient-flow-through-the-batch-normalization-layer.html)
+  - [참고](https://kratzert.github.io/2016/02/12/understanding-the-gradient-flow-through-the-batch-normalization-layer.html)
 - Q2 : Batch Normalization
 - Q3 : Dropout
 - Q4 : Convolutional Networks 
